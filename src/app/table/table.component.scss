@@ -1,0 +1,51 @@
+@import "src/styles/variables";
+
+:host {
+  display: block;
+  border-radius: 4px;
+  box-shadow: 4px 4px 11px 4px $base-color;
+  border: 1px solid black;
+  color: #000;
+
+  font-size: 12px;
+
+  table {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    border-collapse: collapse;
+
+    td, th {
+      overflow: hidden;
+      white-space: nowrap;
+      text-align: left;
+      padding: 10px;
+      margin: 0;
+      border: 0;
+      box-shadow: inset 0px 0px 0px 1px rgba($base-color,0.2);
+    }
+
+    thead {
+      background: rgba($base-color, 0.3);
+    }
+
+    td {
+
+      input:not([type="checkbox"]), select {
+        width: 100%;
+      }
+
+      cursor: pointer;
+
+      &.error {
+        background: rgb(255, 85, 13, 0.2);
+      }
+
+      &:focus-within {
+        outline: none;
+        box-shadow: inset 0px 0px 2px 2px $base-color;
+      }
+    }
+  }
+}

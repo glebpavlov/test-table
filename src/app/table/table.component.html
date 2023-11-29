@@ -1,0 +1,48 @@
+<table>
+  <thead>
+  <ng-container *ngIf="!!model">
+    <tr>
+      <ng-container *ngFor="let modelItem of model">
+        <th>{{modelItem.label}}</th>
+      </ng-container>
+    </tr>
+  </ng-container>
+  </thead>
+  <tbody>
+  <ng-container *ngFor="let rowDataElement of viewData; index as rowIndex">
+    <ng-container [formGroup]="formGroups[rowIndex]">
+    <tr>
+      <ng-container *ngFor="let colDataElement of rowDataElement; index as colIndex">
+        <td [ngClass]="{error: formGroups[rowIndex].get(model[colIndex].key).invalid}" [tabIndex]="itemIterator">
+          <ng-container *ngIf="colIndex == editingPosition?.col && rowIndex == editingPosition?.row else justView">
+            <ng-container [ngSwitch]="model[colIndex].type">
+              <ng-container *ngSwitchCase="enumType.Text">
+                <input [formControlName]="model[colIndex].key">
+              </ng-container>
+              <ng-container *ngSwitchCase="enumType.Checkbox">
+                <input [formControlName]="model[colIndex].key" type="checkbox" [value]="colDataElement">
+              </ng-container>
+              <ng-container *ngSwitchCase="enumType.Digit">
+                <input [formControlName]="model[colIndex].key" type="number" [value]="colDataElement">
+              </ng-container>
+              <ng-container *ngSwitchCase="enumType.Select">
+                <select [formControlName]="model[colIndex].key">
+                  <ng-container *ngFor="let option of model[colIndex]?.other?.options">
+                    <option [value]="option.value">{{option.label}}</option>
+                  </ng-container>
+                </select>
+              </ng-container>
+            </ng-container>
+          </ng-container>
+          <ng-template #justView>
+            {{getViewValue(colDataElement, colIndex)}}
+          </ng-template>
+        </td>
+      </ng-container>
+    </tr>
+    </ng-container>
+  </ng-container>
+
+  </tbody>
+</table>
+<button (click)="addRow()">Добавить еще картину!</button>
